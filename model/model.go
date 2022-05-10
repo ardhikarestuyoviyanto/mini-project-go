@@ -122,21 +122,3 @@ func (Perizinan) TableName() string {
 func (RekapAbsen) TableName() string {
 	return "rekap_absen"
 }
-
-//-------------------------------------
-// API RESPONSE MODEL
-//-------------------------------------
-
-type APIResponseJamKerja struct {
-	ID        int    `json:"ID"`
-	Nama      string `json:"nama"`
-	Harilibur string `json:"harilibur"`
-}
-
-type APIResponseJamKerjaDetail struct {
-	Hari        string `json:"hari"`
-	MulaiMasuk  string `json:"mulai_masuk"`
-	BatasMasuk  string `json:"batas_masuk"`
-	MulaiPulang string `json:"mulai_pulang"`
-	BatasPulang string `json:"batas_pulang"`
-}

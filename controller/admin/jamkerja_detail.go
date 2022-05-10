@@ -68,7 +68,7 @@ func (svc *JamKerjaDetailEchoController) GetByIdController(c echo.Context) error
 
 	jamkerja, jamkerjaDetails := svc.SvcAdmin.GetByIdJamKerjaDetail(idInt)
 
-	return c.JSON(http.StatusCreated, map[string]interface{}{
+	return c.JSON(http.StatusOK, map[string]interface{}{
 		"success": true,
 		"data": map[string]interface{}{
 			"jamkerja":        jamkerja,

@@ -11,6 +11,28 @@ type svcAdmin struct {
 	repo domain.AdapterAdminService
 }
 
+func (s *svcAdmin) CreateUnitKerja(unitkerja model.UnitKerja) {
+	s.repo.CreateUnitKerja(unitkerja)
+}
+
+func (s *svcAdmin) DeleteUnitKerja(unitkerja_id int) {
+	s.repo.DeleteUnitKerja(unitkerja_id)
+}
+
+func (s *svcAdmin) GetAllUnitKerja() []model.APIResponseUnitKerja {
+	return s.repo.GetAllUnitKerja()
+}
+
+func (s *svcAdmin) GetByIdUnitKerja(unitkerja_id int) model.APIResponseUnitKerja {
+	return s.repo.GetByIdUnitKerja(unitkerja_id)
+}
+
+func (s *svcAdmin) UpdateUnitKerja(unitkerja_id int, unitkerja model.UnitKerja) {
+	s.repo.UpdateUnitKerja(unitkerja_id, unitkerja)
+}
+
+//---------------------------------------------------------------------------------------------------------------
+
 func (s *svcAdmin) GetByIdJamKerjaDetail(jamkerja_id int) (model.APIResponseJamKerja, []model.APIResponseJamKerjaDetail) {
 	return s.repo.GetByIdJamKerjaDetail(jamkerja_id)
 }

@@ -14,6 +14,12 @@ type AdapterAdminRepository interface {
 	CreateJamKerjaDetail(jamkerjaDetail []map[string]interface{})
 	DeleteJamKerjaDetail(jamkerja_id int)
 	GetByIdJamKerjaDetail(jamkerja_id int) (model.APIResponseJamKerja, []model.APIResponseJamKerjaDetail)
+	//-----------------------------------------------------------
+	CreateUnitKerja(unitkerja model.UnitKerja)
+	UpdateUnitKerja(unitkerja_id int, unitkerja model.UnitKerja)
+	GetAllUnitKerja() []model.APIResponseUnitKerja
+	GetByIdUnitKerja(unitkerja_id int) model.APIResponseUnitKerja
+	DeleteUnitKerja(unitkerja_id int)
 }
 
 type AdapterAdminService interface {
@@ -26,4 +32,10 @@ type AdapterAdminService interface {
 	CreateJamKerjaDetail(jamkerjaDetail []map[string]interface{})
 	DeleteJamKerjaDetail(jamkerja_id int)
 	GetByIdJamKerjaDetail(jamkerja_id int) (model.APIResponseJamKerja, []model.APIResponseJamKerjaDetail)
+	//-----------------------------------------------------------
+	CreateUnitKerja(unitkerja model.UnitKerja)
+	UpdateUnitKerja(unitkerja_id int, unitkerja model.UnitKerja)
+	GetAllUnitKerja() []model.APIResponseUnitKerja
+	GetByIdUnitKerja(unitkerja_id int) model.APIResponseUnitKerja
+	DeleteUnitKerja(unitkerja_id int)
 }

@@ -12,6 +12,32 @@ type repositoryAdmin struct {
 	DB *gorm.DB
 }
 
+func (r *repositoryAdmin) CreateUnitKerja(unitkerja model.UnitKerja) {
+	r.DB.Create(&unitkerja)
+}
+
+func (r *repositoryAdmin) DeleteUnitKerja(unitkerja_id int) {
+	r.DB.Unscoped().Where("id", unitkerja_id).Delete(&model.UnitKerja{})
+}
+
+func (r *repositoryAdmin) GetAllUnitKerja() []model.APIResponseUnitKerja {
+	var unitkerja []model.APIResponseUnitKerja
+	r.DB.Table("unitkerja").Select("unitkerja.id", "unitkerja.nama", "alamat", "latidute", "longtidute", "jamkerja_id", "jamkerja.nama AS jamkerja_nama").Joins("inner join jamkerja on jamkerja.id = unitkerja.jamkerja_id ").Scan(&unitkerja)
+	return unitkerja
+}
+
+func (r *repositoryAdmin) GetByIdUnitKerja(unitkerja_id int) model.APIResponseUnitKerja {
+	var unitkerja model.APIResponseUnitKerja
+	r.DB.Table("unitkerja").Select("unitkerja.id", "unitkerja.nama", "alamat", "latidute", "longtidute", "jamkerja_id", "jamkerja.nama AS jamkerja_nama").Joins("inner join jamkerja on jamkerja.id = unitkerja.jamkerja_id ").Where("unitkerja.id", unitkerja_id).Scan(&unitkerja)
+	return unitkerja
+}
+
+func (r *repositoryAdmin) UpdateUnitKerja(unitkerja_id int, unitkerja model.UnitKerja) {
+	r.DB.Model(&model.UnitKerja{}).Where("id", unitkerja_id).Updates(unitkerja)
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------
+
 func (r *repositoryAdmin) GetByIdJamKerjaDetail(jamkerja_id int) (model.APIResponseJamKerja, []model.APIResponseJamKerjaDetail) {
 	var jamkerjaDetail []model.APIResponseJamKerjaDetail
 	var jamkerja model.APIResponseJamKerja
