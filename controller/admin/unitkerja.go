@@ -59,8 +59,7 @@ func (svc *UnitKerjaEchoController) GetAllController(c echo.Context) error {
 
 func (svc *UnitKerjaEchoController) GetByIdController(c echo.Context) error {
 
-	id := c.Param("id")
-	idInt, err := strconv.Atoi(id)
+	id, err := strconv.Atoi(c.Param("id"))
 
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -69,7 +68,7 @@ func (svc *UnitKerjaEchoController) GetByIdController(c echo.Context) error {
 		})
 	}
 
-	unitkerja := svc.SvcAdmin.GetByIdUnitKerja(idInt)
+	unitkerja := svc.SvcAdmin.GetByIdUnitKerja(id)
 
 	return c.JSON(http.StatusOK, map[string]interface{}{
 		"data":    unitkerja,
@@ -79,8 +78,7 @@ func (svc *UnitKerjaEchoController) GetByIdController(c echo.Context) error {
 
 func (svc *UnitKerjaEchoController) UpdateController(c echo.Context) error {
 
-	id := c.Param("id")
-	idInt, err := strconv.Atoi(id)
+	id, err := strconv.Atoi(c.Param("id"))
 
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -114,7 +112,7 @@ func (svc *UnitKerjaEchoController) UpdateController(c echo.Context) error {
 		JamkerjaID: int(jamkerjaId),
 	}
 
-	svc.SvcAdmin.UpdateUnitKerja(idInt, unitkerja)
+	svc.SvcAdmin.UpdateUnitKerja(id, unitkerja)
 
 	return c.JSON(http.StatusOK, map[string]interface{}{
 		"success": true,
@@ -124,8 +122,7 @@ func (svc *UnitKerjaEchoController) UpdateController(c echo.Context) error {
 }
 
 func (svc *UnitKerjaEchoController) DeleteController(c echo.Context) error {
-	id := c.Param("id")
-	idInt, err := strconv.Atoi(id)
+	id, err := strconv.Atoi(c.Param("id"))
 
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -133,7 +130,7 @@ func (svc *UnitKerjaEchoController) DeleteController(c echo.Context) error {
 			"message": "Invalid parameter id",
 		})
 	}
-	svc.SvcAdmin.DeleteUnitKerja(idInt)
+	svc.SvcAdmin.DeleteUnitKerja(id)
 	return c.JSON(http.StatusOK, map[string]interface{}{
 		"success": true,
 		"message": "Unit kerja berhasil dihapus",

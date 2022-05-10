@@ -4,13 +4,44 @@ import (
 	"mini-project-go/domain"
 	"mini-project-go/model"
 
-	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
 
 type repositoryAdmin struct {
 	DB *gorm.DB
 }
+
+func (r *repositoryAdmin) GetByEmailPegawai(email string) model.APIResponsePegawai {
+	var pegawai model.APIResponsePegawai
+	r.DB.Table("users").Select("users.id", "users.nama", "email", "jabatan", "unitkerja_id", "unitkerja.nama AS unitkerja_nama").Joins("inner join unitkerja on unitkerja.id = users.unitkerja_id").Where(map[string]interface{}{"email": email, "role_id": 2}).Scan(&pegawai)
+	return pegawai
+}
+
+func (r *repositoryAdmin) CreatePegawai(user model.Users) {
+	r.DB.Create(&user)
+}
+
+func (r *repositoryAdmin) DeletePegawai(user_id int) {
+	r.DB.Unscoped().Where("id", user_id).Delete(&model.Users{})
+}
+
+func (r *repositoryAdmin) GetAllPegawai() []model.APIResponsePegawai {
+	var pegawai []model.APIResponsePegawai
+	r.DB.Table("users").Select("users.id", "users.nama", "email", "jabatan", "unitkerja_id", "unitkerja.nama AS unitkerja_nama").Joins("inner join unitkerja on unitkerja.id = users.unitkerja_id").Where("role_id", 2).Scan(&pegawai)
+	return pegawai
+}
+
+func (r *repositoryAdmin) GetByIdPegawai(user_id int) model.APIResponsePegawai {
+	var pegawai model.APIResponsePegawai
+	r.DB.Table("users").Select("users.id", "users.nama", "email", "jabatan", "unitkerja_id", "unitkerja.nama AS unitkerja_nama").Joins("inner join unitkerja on unitkerja.id = users.unitkerja_id").Where(map[string]interface{}{"users.id": user_id, "role_id": 2}).Scan(&pegawai)
+	return pegawai
+}
+
+func (r *repositoryAdmin) UpdatePegawai(user_id int, user model.Users) {
+	r.DB.Model(&model.Users{}).Where("id", user_id).Updates(user)
+}
+
+//----------------------------------------------------------------------------------------------------------------------
 
 func (r *repositoryAdmin) CreateUnitKerja(unitkerja model.UnitKerja) {
 	r.DB.Create(&unitkerja)
@@ -85,11 +116,6 @@ func (r *repositoryAdmin) CreateJamKerja(jamkerja model.JamKerja) {
 func (r *repositoryAdmin) CreateRole(role []model.Role) error {
 	r.DB.Create(&role)
 	return nil
-}
-
-func (r *repositoryAdmin) MakePassword(password string) string {
-	hash, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-	return string(hash)
 }
 
 func (r *repositoryAdmin) CreateUserAdmin(users model.Users) error {

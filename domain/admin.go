@@ -20,6 +20,13 @@ type AdapterAdminRepository interface {
 	GetAllUnitKerja() []model.APIResponseUnitKerja
 	GetByIdUnitKerja(unitkerja_id int) model.APIResponseUnitKerja
 	DeleteUnitKerja(unitkerja_id int)
+	//------------------------------------------------------------
+	CreatePegawai(user model.Users)
+	UpdatePegawai(user_id int, user model.Users)
+	GetAllPegawai() []model.APIResponsePegawai
+	GetByIdPegawai(user_id int) model.APIResponsePegawai
+	DeletePegawai(user_id int)
+	GetByEmailPegawai(email string) model.APIResponsePegawai
 }
 
 type AdapterAdminService interface {
@@ -38,4 +45,11 @@ type AdapterAdminService interface {
 	GetAllUnitKerja() []model.APIResponseUnitKerja
 	GetByIdUnitKerja(unitkerja_id int) model.APIResponseUnitKerja
 	DeleteUnitKerja(unitkerja_id int)
+	//----------------------------------------------------------------
+	CreatePegawai(user model.Users)
+	UpdatePegawai(user_id int, user model.Users)
+	GetAllPegawai() []model.APIResponsePegawai
+	GetByIdPegawai(user_id int) model.APIResponsePegawai
+	DeletePegawai(user_id int)
+	GetByEmailPegawai(email string) model.APIResponsePegawai
 }

@@ -23,3 +23,12 @@ type APIResponseUnitKerja struct {
 	JamkerjaID   int     `json:"jamkerja_id"`
 	JamkerjaNama string  `json:"jamkerja_nama"`
 }
+
+type APIResponsePegawai struct {
+	ID            int    `json:"ID"`
+	Nama          string `json:"nama"`
+	Email         string `json:"email"`
+	Jabatan       string `json:"jabatan"`
+	UnitkerjaId   int    `json:"unitkerja_id"`
+	UnitkerjaNama string `json:"unitkerja_nama"`
+}

@@ -11,6 +11,32 @@ type svcAdmin struct {
 	repo domain.AdapterAdminService
 }
 
+func (s *svcAdmin) GetByEmailPegawai(email string) model.APIResponsePegawai {
+	return s.repo.GetByEmailPegawai(email)
+}
+
+func (s *svcAdmin) CreatePegawai(user model.Users) {
+	s.repo.CreatePegawai(user)
+}
+
+func (s *svcAdmin) DeletePegawai(user_id int) {
+	s.repo.DeletePegawai(user_id)
+}
+
+func (s *svcAdmin) GetAllPegawai() []model.APIResponsePegawai {
+	return s.repo.GetAllPegawai()
+}
+
+func (s *svcAdmin) GetByIdPegawai(user_id int) model.APIResponsePegawai {
+	return s.repo.GetByIdPegawai(user_id)
+}
+
+func (s *svcAdmin) UpdatePegawai(user_id int, user model.Users) {
+	s.repo.UpdatePegawai(user_id, user)
+}
+
+//------------------------------------------------------------------------------------
+
 func (s *svcAdmin) CreateUnitKerja(unitkerja model.UnitKerja) {
 	s.repo.CreateUnitKerja(unitkerja)
 }

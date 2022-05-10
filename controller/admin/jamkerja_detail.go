@@ -56,8 +56,7 @@ func (svc *JamKerjaDetailEchoController) CreateController(c echo.Context) error 
 }
 
 func (svc *JamKerjaDetailEchoController) GetByIdController(c echo.Context) error {
-	id := c.Param("id")
-	idInt, err := strconv.Atoi(id)
+	id, err := strconv.Atoi(c.Param("id"))
 
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -66,7 +65,7 @@ func (svc *JamKerjaDetailEchoController) GetByIdController(c echo.Context) error
 		})
 	}
 
-	jamkerja, jamkerjaDetails := svc.SvcAdmin.GetByIdJamKerjaDetail(idInt)
+	jamkerja, jamkerjaDetails := svc.SvcAdmin.GetByIdJamKerjaDetail(id)
 
 	return c.JSON(http.StatusOK, map[string]interface{}{
 		"success": true,

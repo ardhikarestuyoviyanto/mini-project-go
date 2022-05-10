@@ -64,15 +64,14 @@ func (svc *JamKerjaEchoController) GetAllController(c echo.Context) error {
 }
 
 func (svc *JamKerjaEchoController) GetByIdController(c echo.Context) error {
-	id := c.Param("id")
-	idInt, err := strconv.Atoi(id)
+	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
 			"success": false,
 			"message": "Invalid parameter id",
 		})
 	}
-	res := svc.SvcAdmin.GetByIdJamKerja(idInt)
+	res := svc.SvcAdmin.GetByIdJamKerja(id)
 	return c.JSON(http.StatusOK, map[string]interface{}{
 		"success": true,
 		"data":    res,
@@ -81,8 +80,7 @@ func (svc *JamKerjaEchoController) GetByIdController(c echo.Context) error {
 
 func (svc *JamKerjaEchoController) UpdateController(c echo.Context) error {
 
-	id := c.Param("id")
-	idInt, err := strconv.Atoi(id)
+	id, err := strconv.Atoi(c.Param("id"))
 
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
@@ -120,8 +118,8 @@ func (svc *JamKerjaEchoController) UpdateController(c echo.Context) error {
 		Harilibur: hariLiburStr,
 	}
 
-	svc.SvcAdmin.UpdateJamKerja(idInt, jamkerjaModel)
-	res := svc.SvcAdmin.GetByIdJamKerja(idInt)
+	svc.SvcAdmin.UpdateJamKerja(id, jamkerjaModel)
+	res := svc.SvcAdmin.GetByIdJamKerja(id)
 	return c.JSON(http.StatusOK, map[string]interface{}{
 		"success": true,
 		"message": "jam kerja berhasil diupdate",
@@ -130,9 +128,7 @@ func (svc *JamKerjaEchoController) UpdateController(c echo.Context) error {
 }
 
 func (svc *JamKerjaEchoController) DeleteController(c echo.Context) error {
-	id := c.Param("id")
-	idInt, err := strconv.Atoi(id)
-
+	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
 			"success": false,
@@ -140,7 +136,7 @@ func (svc *JamKerjaEchoController) DeleteController(c echo.Context) error {
 		})
 	}
 
-	svc.SvcAdmin.DeleteJamKerja(idInt)
+	svc.SvcAdmin.DeleteJamKerja(id)
 	return c.JSON(http.StatusOK, map[string]interface{}{
 		"success": true,
 		"message": "jam kerja berhasil dihapus",

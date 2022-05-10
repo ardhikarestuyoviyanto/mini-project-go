@@ -11,10 +11,6 @@ type svcSeed struct {
 	repo domain.AdapterSeedService
 }
 
-func (s *svcSeed) MakePassword(password string) string {
-	return s.repo.MakePassword(password)
-}
-
 func (s *svcSeed) CreateRole(role []model.Role) error {
 	return s.repo.CreateRole(role)
 }

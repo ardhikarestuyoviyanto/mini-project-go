@@ -2,8 +2,11 @@ package lib
 
 import (
 	"mini-project-go/constants"
+	"net/mail"
 	"reflect"
 	"time"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 func CheckDataType(m interface{}) bool {
@@ -69,4 +72,14 @@ func CreateSliceJamKerjaDetail(m []interface{}, jamkerja_id int) []map[string]in
 
 	return res
 
+}
+
+func MakePassword(password string) string {
+	hash, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	return string(hash)
+}
+
+func EmailValidation(email string) bool {
+	_, err := mail.ParseAddress(email)
+	return err == nil
 }

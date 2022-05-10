@@ -2,6 +2,7 @@ package database
 
 import (
 	"mini-project-go/config"
+	"mini-project-go/lib"
 	"mini-project-go/model"
 	"mini-project-go/repository"
 	"mini-project-go/service"
@@ -34,7 +35,7 @@ func CreateAdminSeed(db *gorm.DB, conf config.Config) {
 	user := model.Users{
 		Nama:     "Ardhika Yoviyanto, S.kom",
 		Email:    "ardhikayoviyanto@gmail.com",
-		Password: serv.MakePassword("123"),
+		Password: lib.MakePassword("123"),
 		Jabatan:  "Administrator",
 		RoleID:   1,
 	}

@@ -44,16 +44,16 @@ type UnitKerja struct {
 
 type Users struct {
 	gorm.Model
-	ID          int           `gorm:"primaryKey,AUTO_INCREMENT"`
-	Nama        string        `json:"nama"`
-	Email       string        `json:"email"`
-	Password    string        `json:"password"`
-	Jabatan     string        `json:"jabatan"`
-	Token       string        `json:"token"`
-	UnitkerjaID sql.NullInt64 `json:"unitkerja_id"`
-	RoleID      int           `json:"role_id"`
-	UnitKerja   UnitKerja     `gorm:"foreignKey:UnitkerjaID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
-	Role        Role          `gorm:"foreignKey:RoleID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
+	ID          int       `gorm:"primaryKey,AUTO_INCREMENT"`
+	Nama        string    `json:"nama"`
+	Email       string    `json:"email"`
+	Password    string    `json:"password"`
+	Jabatan     string    `json:"jabatan"`
+	Token       string    `json:"token"`
+	UnitkerjaID int       `json:"unitkerja_id"`
+	RoleID      int       `json:"role_id"`
+	UnitKerja   UnitKerja `gorm:"foreignKey:UnitkerjaID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
+	Role        Role      `gorm:"foreignKey:RoleID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 }
 
 type KategoriPerizinan struct {
