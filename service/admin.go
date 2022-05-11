@@ -11,6 +11,28 @@ type svcAdmin struct {
 	repo domain.AdapterAdminService
 }
 
+func (s *svcAdmin) CreateKategoriPerizinan(perizinan model.KategoriPerizinan) {
+	s.repo.CreateKategoriPerizinan(perizinan)
+}
+
+func (s *svcAdmin) DeleteKategoriPerizinan(kategori_id int) {
+	s.repo.DeleteKategoriPerizinan(kategori_id)
+}
+
+func (s *svcAdmin) GetAllKategoriPerizinan() []model.APIResponseKategoriPerizinan {
+	return s.repo.GetAllKategoriPerizinan()
+}
+
+func (s *svcAdmin) GetByIdKategoriPerizinan(kategori_id int) model.APIResponseKategoriPerizinan {
+	return s.repo.GetByIdKategoriPerizinan(kategori_id)
+}
+
+func (s *svcAdmin) UpdateKategoriPerizinan(kategori_id int, perizinan model.KategoriPerizinan) {
+	s.repo.UpdateKategoriPerizinan(kategori_id, perizinan)
+}
+
+//-----------------------------------------------------------------------------------------------
+
 func (s *svcAdmin) GetByEmailPegawai(email string) model.APIResponsePegawai {
 	return s.repo.GetByEmailPegawai(email)
 }

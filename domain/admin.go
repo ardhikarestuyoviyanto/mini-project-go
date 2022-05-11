@@ -27,6 +27,12 @@ type AdapterAdminRepository interface {
 	GetByIdPegawai(user_id int) model.APIResponsePegawai
 	DeletePegawai(user_id int)
 	GetByEmailPegawai(email string) model.APIResponsePegawai
+	//------------------------------------------------------------
+	CreateKategoriPerizinan(perizinan model.KategoriPerizinan)
+	UpdateKategoriPerizinan(kategori_id int, perizinan model.KategoriPerizinan)
+	DeleteKategoriPerizinan(kategori_id int)
+	GetAllKategoriPerizinan() []model.APIResponseKategoriPerizinan
+	GetByIdKategoriPerizinan(kategori_id int) model.APIResponseKategoriPerizinan
 }
 
 type AdapterAdminService interface {
@@ -52,4 +58,10 @@ type AdapterAdminService interface {
 	GetByIdPegawai(user_id int) model.APIResponsePegawai
 	DeletePegawai(user_id int)
 	GetByEmailPegawai(email string) model.APIResponsePegawai
+	//---------------------------------------------------------------sW-
+	CreateKategoriPerizinan(perizinan model.KategoriPerizinan)
+	UpdateKategoriPerizinan(kategori_id int, perizinan model.KategoriPerizinan)
+	DeleteKategoriPerizinan(kategori_id int)
+	GetAllKategoriPerizinan() []model.APIResponseKategoriPerizinan
+	GetByIdKategoriPerizinan(kategori_id int) model.APIResponseKategoriPerizinan
 }

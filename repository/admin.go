@@ -11,6 +11,31 @@ type repositoryAdmin struct {
 	DB *gorm.DB
 }
 
+func (r *repositoryAdmin) CreateKategoriPerizinan(perizinan model.KategoriPerizinan) {
+	r.DB.Create(&perizinan)
+}
+
+func (r *repositoryAdmin) DeleteKategoriPerizinan(kategori_id int) {
+	r.DB.Unscoped().Where("id", kategori_id).Delete(&model.KategoriPerizinan{})
+}
+
+func (r *repositoryAdmin) GetAllKategoriPerizinan() []model.APIResponseKategoriPerizinan {
+	var perizinan []model.APIResponseKategoriPerizinan
+	r.DB.Table("kategori_perizinan").Select("id", "name", "max_day", "type").Scan(&perizinan)
+	return perizinan
+}
+
+func (r *repositoryAdmin) GetByIdKategoriPerizinan(kategori_id int) model.APIResponseKategoriPerizinan {
+	var perizinan model.APIResponseKategoriPerizinan
+	r.DB.Table("kategori_perizinan").Select("id", "name", "max_day", "type").Where("id", kategori_id).Scan(&perizinan)
+	return perizinan
+}
+
+func (r *repositoryAdmin) UpdateKategoriPerizinan(kategori_id int, perizinan model.KategoriPerizinan) {
+	r.DB.Model(&model.KategoriPerizinan{}).Where("id", kategori_id).Updates(perizinan)
+}
+
+//-------------------------------------------------------------------------------------------------------
 func (r *repositoryAdmin) GetByEmailPegawai(email string) model.APIResponsePegawai {
 	var pegawai model.APIResponsePegawai
 	r.DB.Table("users").Select("users.id", "users.nama", "email", "jabatan", "unitkerja_id", "unitkerja.nama AS unitkerja_nama").Joins("inner join unitkerja on unitkerja.id = users.unitkerja_id").Where(map[string]interface{}{"email": email, "role_id": 2}).Scan(&pegawai)

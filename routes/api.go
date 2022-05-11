@@ -40,6 +40,9 @@ func RegisterAdminAPI(e *echo.Echo, db *gorm.DB, conf config.Config) {
 	contPegawai := a.PegawaiEchoController{
 		SvcAdmin: svc,
 	}
+	contKategoriPerizinan := a.KategoriPerizinanEchoController{
+		SvcAdmin: svc,
+	}
 
 	r := e.Group("/admin")
 	r.Use(middleware.JWT([]byte(constants.SCREET_JWT_FOR_ADMIN)))
@@ -64,4 +67,10 @@ func RegisterAdminAPI(e *echo.Echo, db *gorm.DB, conf config.Config) {
 	r.GET("/pegawai/:id", contPegawai.GetByIdController)
 	r.GET("/pegawai", contPegawai.GetAllController)
 	r.DELETE("/pegawai/:id", contPegawai.DeleteController)
+	//-----------------------------------------------------------------
+	r.POST("/perizinan/kategori", contKategoriPerizinan.CreateController)
+	r.GET("/perizinan/kategori", contKategoriPerizinan.GetAllController)
+	r.GET("/perizinan/kategori/:id", contKategoriPerizinan.GetByIdController)
+	r.PUT("/perizinan/kategori/:id", contKategoriPerizinan.UpdateController)
+	r.DELETE("/perizinan/kategori/:id", contKategoriPerizinan.DeleteController)
 }

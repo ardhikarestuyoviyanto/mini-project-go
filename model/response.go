@@ -32,3 +32,10 @@ type APIResponsePegawai struct {
 	UnitkerjaId   int    `json:"unitkerja_id"`
 	UnitkerjaNama string `json:"unitkerja_nama"`
 }
+
+type APIResponseKategoriPerizinan struct {
+	ID     int    `json:"ID"`
+	Name   string `json:"name"`
+	MaxDay int    `json:"max_day"`
+	Type   string `json:"type"`
+}
