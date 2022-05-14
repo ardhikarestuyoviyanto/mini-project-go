@@ -48,7 +48,7 @@ func (svc *AuthEchoController) LoginUserController(c echo.Context) error {
 				"token":   token,
 			})
 		} else {
-			token, _ := middleware.CreateTokenPegawai(res.ID, res.RoleID, res.UnitKerja.ID, res.Email, res.Nama)
+			token, _ := middleware.CreateTokenPegawai(res.ID, res.RoleID, res.UnitkerjaID, res.Email, res.Nama)
 			svc.SvcAuth.UpdateToken(token, int(res.ID))
 			return c.JSON(http.StatusOK, map[string]interface{}{
 				"success": true,

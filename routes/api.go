@@ -5,6 +5,7 @@ import (
 	"mini-project-go/constants"
 	"mini-project-go/controller"
 	a "mini-project-go/controller/admin"
+	p "mini-project-go/controller/pegawai"
 	"mini-project-go/repository"
 	"mini-project-go/service"
 
@@ -73,4 +74,16 @@ func RegisterAdminAPI(e *echo.Echo, db *gorm.DB, conf config.Config) {
 	r.GET("/perizinan/kategori/:id", contKategoriPerizinan.GetByIdController)
 	r.PUT("/perizinan/kategori/:id", contKategoriPerizinan.UpdateController)
 	r.DELETE("/perizinan/kategori/:id", contKategoriPerizinan.DeleteController)
+}
+
+func RegisterPegawaiAPI(e *echo.Echo, db *gorm.DB, conf config.Config) {
+	repo := repository.NewPegawaiRepository(db)
+	svc := service.NewServicePegawai(repo, conf)
+	contAbsensi := p.PegawaiEchoController{
+		SvcPegawai: svc,
+	}
+	p := e.Group("/pegawai")
+	p.Use(middleware.JWT([]byte(constants.SCREET_JWT_FOR_PEGAWAI)))
+	//----------------------------------------------------------------------------------
+	p.POST("/absen/masuk", contAbsensi.AbsenMasukController)
 }

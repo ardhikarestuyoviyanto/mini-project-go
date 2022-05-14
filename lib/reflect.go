@@ -4,8 +4,10 @@ import (
 	"mini-project-go/constants"
 	"net/mail"
 	"reflect"
+	"strings"
 	"time"
 
+	"github.com/jftuga/geodist"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -82,4 +84,54 @@ func MakePassword(password string) string {
 func EmailValidation(email string) bool {
 	_, err := mail.ParseAddress(email)
 	return err == nil
+}
+
+func CheckExtensionForImage(extension string) bool {
+	allowed := []string{
+		".png", ".jpg", ".jpeg",
+	}
+	extension = strings.ToLower(extension)
+	for _, v := range allowed {
+		if v == extension {
+			return true
+		}
+	}
+	return false
+}
+
+func CheckDistance(latPegawaiFloat float64, longPegawaiFloat float64, latUnitKerja float64, lonUnitKerja float64) bool {
+	var pegawaiLoc = geodist.Coord{
+		Lat: latPegawaiFloat,
+		Lon: longPegawaiFloat,
+	}
+	var unitKerjaLoc = geodist.Coord{
+		Lat: latUnitKerja,
+		Lon: lonUnitKerja,
+	}
+	miles, _, _ := geodist.VincentyDistance(pegawaiLoc, unitKerjaLoc)
+	if miles <= constants.MIN_DISTANCE_ABSENSI {
+		return true
+	} else {
+		return false
+	}
+}
+
+// func InTimeSpan(start, end, check time.Time) bool {
+// 	if start.Before(end) {
+// 		return !check.Before(start) && !check.After(end)
+// 	}
+// 	if start.Equal(end) {
+// 		return check.Equal(start)
+// 	}
+// 	return !start.After(check) || !end.Before(check)
+// }
+// func StrToTimeFormat(str string) time.Time {
+// 	res, _ := time.Parse(constants.FORMAT_TIME, str)
+// 	return res
+// }
+
+func Strtotime(str string) int64 {
+	layout := "15:04:05"
+	t, _ := time.Parse(layout, str)
+	return t.Unix()
 }

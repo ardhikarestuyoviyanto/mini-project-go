@@ -31,3 +31,11 @@ func CreateTokenPegawai(id int, role_id int, unitkerja_id int, email string, nam
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString([]byte(constants.SCREET_JWT_FOR_PEGAWAI))
 }
+
+func DecodeTokenPegawai(tokenString string) (jwt.MapClaims, error) {
+	claims := jwt.MapClaims{}
+	_, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
+		return []byte(""), nil
+	})
+	return claims, err
+}

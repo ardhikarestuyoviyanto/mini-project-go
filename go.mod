@@ -11,6 +11,11 @@ require (
 require github.com/golang-jwt/jwt v3.2.2+incompatible
 
 require (
+	github.com/golang-module/carbon/v2 v2.1.6
+	github.com/jftuga/geodist v1.0.0
+)
+
+require (
 	github.com/joho/godotenv v1.4.0
 	golang.org/x/time v0.0.0-20201208040808-7e3f01d25324 // indirect
 )

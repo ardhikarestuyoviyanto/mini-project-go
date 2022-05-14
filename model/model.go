@@ -1,8 +1,6 @@
 package model
 
 import (
-	"database/sql"
-
 	"gorm.io/gorm"
 )
 
@@ -79,16 +77,17 @@ type Perizinan struct {
 
 type RekapAbsen struct {
 	gorm.Model
-	ID          int            `gorm:"primaryKey,AUTO_INCREMENT"`
-	Tanggal     string         `json:"tanggal" gorm:"type:date"`
-	Masuk       sql.NullTime   `json:"masuk"`
-	Pulang      sql.NullTime   `json:"pulang"`
-	FotoMasuk   sql.NullString `json:"foto_masuk"`
-	FotoPulang  sql.NullString `json:"foto_pulang"`
-	UserID      int            `json:"user_id"`
-	PerizinanID sql.NullInt64  `json:"perizinan_id"`
-	Users       Users          `gorm:"foreignKey:UserID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
-	Perizinan   Perizinan      `gorm:"foreignKey:PerizinanID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
+	ID          int       `gorm:"primaryKey,AUTO_INCREMENT"`
+	Tanggal     string    `json:"tanggal" gorm:"type:date"`
+	Masuk       string    `json:"masuk"`
+	Pulang      string    `json:"pulang"`
+	FotoMasuk   string    `json:"foto_masuk"`
+	FotoPulang  string    `json:"foto_pulang"`
+	Keterangan  string    `json:"Hadir"`
+	UserID      int       `json:"user_id"`
+	PerizinanID int       `json:"perizinan_id"`
+	Users       Users     `gorm:"foreignKey:UserID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
+	Perizinan   Perizinan `gorm:"foreignKey:PerizinanID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 }
 
 func (Role) TableName() string {
