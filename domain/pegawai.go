@@ -11,6 +11,7 @@ type AdapterPegawaiRepository interface {
 	GetJamKerjaDetailTodayByIdUnitKerja(unitkerja_id int, hari string) (mMasuk string, bMasuk string, mPulang string, bPulang string)
 	CheckHariLibur(unitkerja_id int, dayNow string) bool
 	GetPresensiToday(user_id int, tanggal string) (absenMasuk string, absenPulang string)
+	CheckPerizinanDay(user_id int, tgl string) bool
 	//-------------------------------------------------------------------------------------------------------
 	CreatePerizinan(perizinan model.Perizinan) bool
 	GetAllPerizinan(pegawai_id int) []model.APIResponsePerizinan
@@ -29,6 +30,7 @@ type AdapterPegawaiService interface {
 	GetJamKerjaDetailTodayByIdUnitKerja(unitkerja_id int, hari string) (mMasuk string, bMasuk string, mPulang string, bPulang string)
 	CheckHariLibur(unitkerja_id int, dayNow string) bool
 	GetPresensiToday(user_id int, tanggal string) (absenMasuk string, absenPulang string)
+	CheckPerizinanDay(user_id int, tgl string) bool
 	//-------------------------------------------------------------------------------------------------------
 	CreatePerizinan(perizinan model.Perizinan) bool
 	GetAllPerizinan(pegawai_id int) []model.APIResponsePerizinan

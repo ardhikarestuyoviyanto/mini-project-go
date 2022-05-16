@@ -14,6 +14,17 @@ type repositoryPegawai struct {
 	DB *gorm.DB
 }
 
+func (r *repositoryPegawai) CheckPerizinanDay(user_id int, tgl string) bool {
+	var rekapabsen model.RekapAbsen
+	r.DB.Table("rekap_absen").Select("perizinan_id").Where("user_id", user_id).Where("tanggal", tgl).Scan(&rekapabsen)
+	fmt.Println("hsnb")
+	if rekapabsen.PerizinanID == 0 {
+		return true
+	} else {
+		return false
+	}
+}
+
 func (r *repositoryPegawai) GetAllKategoriPerizinan() []model.APIResponseKategoriPerizinan {
 	var kategoriperizinan []model.APIResponseKategoriPerizinan
 	r.DB.Table("kategori_perizinan").Scan(&kategoriperizinan)

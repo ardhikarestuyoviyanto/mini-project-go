@@ -11,6 +11,10 @@ type svcPegawai struct {
 	repo domain.AdapterPegawaiRepository
 }
 
+func (s *svcPegawai) CheckPerizinanDay(user_id int, tgl string) bool {
+	return s.repo.CheckPerizinanDay(user_id, tgl)
+}
+
 func (s *svcPegawai) GetAllKategoriPerizinan() []model.APIResponseKategoriPerizinan {
 	return s.repo.GetAllKategoriPerizinan()
 }

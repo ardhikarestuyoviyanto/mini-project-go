@@ -94,6 +94,8 @@ func (svc *PerizinanEchoController) UpdateController(c echo.Context) error {
 				Keterangan:  "Pegawai Sedang Izin",
 				UserID:      perizinanDetail.UserId,
 				PerizinanID: perizinanDetail.ID,
+				Masuk:       "00:00:00",
+				Pulang:      "00:00:00",
 			}
 			svc.SvcAdmin.InsertRekapAbsen(rekapAbsenNew)
 		}
@@ -116,6 +118,8 @@ func (svc *PerizinanEchoController) DeleteController(c echo.Context) error {
 	perizinanDetail := svc.SvcAdmin.GetByIdPerizinan(id)
 	rekapabsen := model.RekapAbsen{
 		Keterangan: "TIDAK HADIR",
+		Masuk:      "00:00:00",
+		Pulang:     "00:00:00",
 	}
 	svc.SvcAdmin.UpdateRekapAbsen(perizinanDetail.Start, perizinanDetail.Finish, perizinanDetail.UserId, rekapabsen)
 	svc.SvcAdmin.DeletePerizinan(id)

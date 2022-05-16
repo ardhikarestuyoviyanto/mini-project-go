@@ -85,6 +85,13 @@ func (svc *PegawaiEchoController) AbsenMasukController(c echo.Context) error {
 		})
 	}
 
+	if !svc.SvcPegawai.CheckPerizinanDay(int(claimsToken["user_id"].(float64)), today) {
+		return c.JSON(http.StatusBadRequest, map[string]interface{}{
+			"success": false,
+			"message": "Anda sedang dalam durasi perizinan",
+		})
+	}
+
 	//-----------------------------------------------------------------------------
 
 	src, err := foto.Open()
@@ -182,6 +189,13 @@ func (svc *PegawaiEchoController) AbsenPulangController(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
 			"success": false,
 			"message": "Anda telah melakukan presensi pulang hari ini",
+		})
+	}
+
+	if !svc.SvcPegawai.CheckPerizinanDay(int(claimsToken["user_id"].(float64)), today) {
+		return c.JSON(http.StatusBadRequest, map[string]interface{}{
+			"success": false,
+			"message": "Anda sedang dalam durasi perizinan",
 		})
 	}
 
