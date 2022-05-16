@@ -27,7 +27,9 @@ func RegisterAuthAPI(e *echo.Echo, db *gorm.DB, conf config.Config) {
 
 func RegisterAdminAPI(e *echo.Echo, db *gorm.DB, conf config.Config) {
 	repo := repository.NewAdminRepository(db)
+	repo_report := repository.NewReportAdminRepository(db)
 	svc := service.NewServiceAdmin(repo, conf)
+	svc_report := service.NewServiceReportAdmin(repo_report, conf)
 
 	contJamKerja := a.JamKerjaEchoController{
 		SvcAdmin: svc,
@@ -47,7 +49,9 @@ func RegisterAdminAPI(e *echo.Echo, db *gorm.DB, conf config.Config) {
 	contPerizinan := a.PerizinanEchoController{
 		SvcAdmin: svc,
 	}
-
+	contReport := a.ReportEchoController{
+		SvcAdmin: svc_report,
+	}
 	r := e.Group("/admin")
 	r.Use(middleware.JWT([]byte(constants.SCREET_JWT_FOR_ADMIN)))
 	//--------------------------------------------------------
@@ -82,11 +86,17 @@ func RegisterAdminAPI(e *echo.Echo, db *gorm.DB, conf config.Config) {
 	r.GET("/perizinan/:id", contPerizinan.GetByIdController)
 	r.PUT("/perizinan/:id", contPerizinan.UpdateController)
 	r.DELETE("/perizinan/:id", contPerizinan.DeleteController)
+	//-------------------------------------------------------------------------
+	r.GET("/report/bulanan", contReport.GetBulanan)
+	r.GET("/report/rangeday", contReport.GetRangeDay)
 }
 
 func RegisterPegawaiAPI(e *echo.Echo, db *gorm.DB, conf config.Config) {
 	repo := repository.NewPegawaiRepository(db)
+	repo_report := repository.NewReportPegawaiRepository(db)
 	svc := service.NewServicePegawai(repo, conf)
+	svc_report := service.NewServiceReportPegawai(repo_report, conf)
+
 	contAbsensi := p.PegawaiEchoController{
 		SvcPegawai: svc,
 	}
@@ -96,6 +106,10 @@ func RegisterPegawaiAPI(e *echo.Echo, db *gorm.DB, conf config.Config) {
 	contKategoriPerizinan := p.KategoriPerizinanEchoController{
 		SvcPegawai: svc,
 	}
+	contReport := p.ReportEchoController{
+		SvcAdmin: svc_report,
+	}
+
 	p := e.Group("/pegawai")
 	p.Use(middleware.JWT([]byte(constants.SCREET_JWT_FOR_PEGAWAI)))
 	//----------------------------------------------------------------------------------
@@ -108,4 +122,7 @@ func RegisterPegawaiAPI(e *echo.Echo, db *gorm.DB, conf config.Config) {
 	p.GET("/perizinan/:id", contPerizinan.GetByIdController)
 	//------------------------------------------------------------------------------------
 	p.GET("/perizinan/kategori", contKategoriPerizinan.GetAllController)
+	//-----------------------------------------------------------------------------------------
+	p.GET("/report/bulanan", contReport.GetBulanan)
+	p.GET("/report/rangeday", contReport.GetRangeDay)
 }

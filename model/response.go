@@ -51,3 +51,14 @@ type APIResponsePerizinan struct {
 	UserId                int    `json:"user_id"`
 	KategoriPerizinanId   int    `json:"kategori_perizinan_id"`
 }
+
+type APIResponseRekapAbsen struct {
+	ID          int    `json:"ID"`
+	PegawaiName string `json:"pegawai_name"`
+	Tanggal     string `json:"tanggal"`
+	Masuk       string `json:"masuk"`
+	Pulang      string `json:"pulang"`
+	FotoMasuk   string `json:"foto_masuk"`
+	FotoPulang  string `json:"foto_pulang"`
+	Keterangan  string `json:"keterangan"`
+}
