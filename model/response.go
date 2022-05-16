@@ -39,3 +39,13 @@ type APIResponseKategoriPerizinan struct {
 	MaxDay int    `json:"max_day"`
 	Type   string `json:"type"`
 }
+
+type APIResponsePerizinan struct {
+	ID                    int    `json:"ID"`
+	Start                 string `json:"start"`
+	Finish                string `json:"finish"`
+	Status                string `json:"status"`
+	Catatan               string `json:"catatan"`
+	PegawaiNama           string `json:"nama_pegawai"`
+	KategoriPerizinanNama string `json:"kategori_perizinan"`
+}

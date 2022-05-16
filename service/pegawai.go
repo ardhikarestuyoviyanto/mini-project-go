@@ -3,11 +3,43 @@ package service
 import (
 	"mini-project-go/config"
 	"mini-project-go/domain"
+	"mini-project-go/model"
 )
 
 type svcPegawai struct {
 	c    config.Config
 	repo domain.AdapterPegawaiRepository
+}
+
+func (s *svcPegawai) GetAllKategoriPerizinan() []model.APIResponseKategoriPerizinan {
+	return s.repo.GetAllKategoriPerizinan()
+}
+
+//--------------------------------------------------------------------------------------------
+func (s *svcPegawai) CreatePerizinan(perizinan model.Perizinan) bool {
+	return s.repo.CreatePerizinan(perizinan)
+}
+
+func (s *svcPegawai) GetAllPerizinan(pegawai_id int) []model.APIResponsePerizinan {
+	return s.repo.GetAllPerizinan(pegawai_id)
+}
+
+func (s *svcPegawai) GetByIdPerizinan(perizinan_id int) model.APIResponsePerizinan {
+	return s.repo.GetByIdPerizinan(perizinan_id)
+}
+
+func (s *svcPegawai) UpdatePerizinan(perizinan_id int, perizinan model.Perizinan) bool {
+	return s.repo.UpdatePerizinan(perizinan_id, perizinan)
+}
+
+//-----------------------------------------------------------------------------------------------------
+
+func (s *svcPegawai) ActionInsertAbsenPulang(pegawai_id int, tgl string, pulang string, foto string) {
+	s.repo.ActionInsertAbsenPulang(pegawai_id, tgl, pulang, foto)
+}
+
+func (s *svcPegawai) ActionUpdateAbsenPulang(pegawai_id int, tgl string, pulang string, foto string) {
+	s.repo.ActionUpdateAbsenPulang(pegawai_id, tgl, pulang, foto)
 }
 
 func (s *svcPegawai) ActionInsertAbsenMasuk(pegawai_id int, tgl string, masuk string, foto string) {

@@ -69,6 +69,7 @@ type Perizinan struct {
 	Start               string            `json:"start" gorm:"date"`
 	Finish              string            `json:"finish" gorm:"date"`
 	FilePendukung       string            `json:"file_pendukung"`
+	Catatan             string            `json:"catatan"`
 	UserID              int               `json:"user_id"`
 	KategoriPerizinanID int               `json:"kategori_perizinan_id"`
 	Users               Users             `gorm:"foreignKey:UserID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`

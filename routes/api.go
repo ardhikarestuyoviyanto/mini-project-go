@@ -82,8 +82,22 @@ func RegisterPegawaiAPI(e *echo.Echo, db *gorm.DB, conf config.Config) {
 	contAbsensi := p.PegawaiEchoController{
 		SvcPegawai: svc,
 	}
+	contPerizinan := p.PerizinanEchoController{
+		SvcPegawai: svc,
+	}
+	contKategoriPerizinan := p.KategoriPerizinanEchoController{
+		SvcPegawai: svc,
+	}
 	p := e.Group("/pegawai")
 	p.Use(middleware.JWT([]byte(constants.SCREET_JWT_FOR_PEGAWAI)))
 	//----------------------------------------------------------------------------------
 	p.POST("/absen/masuk", contAbsensi.AbsenMasukController)
+	p.POST("/absen/pulang", contAbsensi.AbsenPulangController)
+	//------------------------------------------------------------------------------------
+	p.POST("/perizinan", contPerizinan.CreateController)
+	p.GET("/perizinan", contPerizinan.GetAllController)
+	p.PUT("/perizinan/:id", contPerizinan.UpdateController)
+	p.GET("/perizinan/:id", contPerizinan.GetByIdController)
+	//------------------------------------------------------------------------------------
+	p.GET("/perizinan/kategori", contKategoriPerizinan.GetAllController)
 }

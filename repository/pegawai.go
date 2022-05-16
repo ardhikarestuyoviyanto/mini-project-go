@@ -1,7 +1,9 @@
 package repository
 
 import (
+	"fmt"
 	"mini-project-go/domain"
+	"mini-project-go/lib"
 	"mini-project-go/model"
 	"strings"
 
@@ -10,6 +12,72 @@ import (
 
 type repositoryPegawai struct {
 	DB *gorm.DB
+}
+
+// GetAllKategoriPerizinan implements domain.AdapterPegawaiRepository
+func (r *repositoryPegawai) GetAllKategoriPerizinan() []model.APIResponseKategoriPerizinan {
+	var kategoriperizinan []model.APIResponseKategoriPerizinan
+	r.DB.Table("kategori_perizinan").Scan(&kategoriperizinan)
+	return kategoriperizinan
+}
+
+//-------------------------------------------------------------------------------------------------------------------
+
+func (r *repositoryPegawai) CreatePerizinan(perizinan model.Perizinan) bool {
+	var kategoriperizinan model.KategoriPerizinan
+	r.DB.Table("kategori_perizinan").Select("max_day").Where("id", perizinan.KategoriPerizinanID).Scan(&kategoriperizinan)
+	if !lib.ValidationDatePerizinan(perizinan.Start, perizinan.Finish, kategoriperizinan.MaxDay) {
+		return false
+	}
+	r.DB.Create(&perizinan)
+	return true
+}
+
+func (r *repositoryPegawai) GetAllPerizinan(pegawai_id int) []model.APIResponsePerizinan {
+	var perizinan []model.APIResponsePerizinan
+	r.DB.Table("users").Select("users.nama AS pegawai_nama", "kategori_perizinan.name AS kategori_perizinan_nama", "perizinan.catatan", "perizinan.status", "perizinan.start", "perizinan.finish", "perizinan.id").Joins("inner join perizinan on perizinan.user_id = users.id").Joins("inner join kategori_perizinan on perizinan.kategori_perizinan_id=kategori_perizinan.id").Where("perizinan.user_id", pegawai_id).Scan(&perizinan)
+	return perizinan
+}
+
+func (r *repositoryPegawai) GetByIdPerizinan(perizinan_id int) model.APIResponsePerizinan {
+	var perizinan model.APIResponsePerizinan
+	r.DB.Table("users").Select("users.nama AS pegawai_nama", "kategori_perizinan.name AS kategori_perizinan_nama", "perizinan.catatan", "perizinan.status", "perizinan.start", "perizinan.finish", "perizinan.id").Joins("inner join perizinan on perizinan.user_id = users.id").Joins("inner join kategori_perizinan on perizinan.kategori_perizinan_id=kategori_perizinan.id").Where("perizinan.id", perizinan_id).Scan(&perizinan)
+	return perizinan
+}
+
+func (r *repositoryPegawai) UpdatePerizinan(perizinan_id int, perizinan model.Perizinan) bool {
+	var kategoriperizinan model.KategoriPerizinan
+	r.DB.Table("kategori_perizinan").Select("max_day").Where("id", perizinan.KategoriPerizinanID).Scan(&kategoriperizinan)
+	if !lib.ValidationDatePerizinan(perizinan.Start, perizinan.Finish, kategoriperizinan.MaxDay) {
+		return false
+	}
+	r.DB.Model(&model.Perizinan{}).Where("id", perizinan_id).Updates(perizinan)
+	return true
+}
+
+//----------------------------------------------------------------------------------------------------------------
+
+func (r *repositoryPegawai) ActionInsertAbsenPulang(pegawai_id int, tgl string, pulang string, foto string) {
+	rekapAbsen := model.RekapAbsen{
+		UserID:     pegawai_id,
+		Tanggal:    tgl,
+		Pulang:     pulang,
+		FotoPulang: foto,
+		Keterangan: "Hadir",
+	}
+	r.DB.Select("UserID", "Tanggal", "Pulang", "FotoPulang", "Keterangan").Create(&rekapAbsen)
+}
+
+func (r repositoryPegawai) ActionUpdateAbsenPulang(pegawai_id int, tgl string, pulang string, foto string) {
+	rekapAbsen := model.RekapAbsen{
+		UserID:     pegawai_id,
+		Tanggal:    tgl,
+		Pulang:     pulang,
+		FotoPulang: foto,
+		Keterangan: "Hadir",
+	}
+	fmt.Println(rekapAbsen)
+	r.DB.Model(&model.RekapAbsen{}).Where("user_id", pegawai_id).Where("tanggal", tgl).Updates(rekapAbsen)
 }
 
 func (r *repositoryPegawai) ActionInsertAbsenMasuk(pegawai_id int, tgl string, masuk string, foto string) {
