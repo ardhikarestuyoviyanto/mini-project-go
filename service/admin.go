@@ -11,6 +11,36 @@ type svcAdmin struct {
 	repo domain.AdapterAdminService
 }
 
+func (s *svcAdmin) UpdateRekapAbsen(starts string, finish string, pegawai_id int, rekapabsen model.RekapAbsen) {
+	s.repo.UpdateRekapAbsen(starts, finish, pegawai_id, rekapabsen)
+}
+
+func (s *svcAdmin) DeleteRekapAbsen(starts string, finish string, pegawai_id int) {
+	s.repo.DeleteRekapAbsen(starts, finish, pegawai_id)
+}
+
+func (s *svcAdmin) InsertRekapAbsen(rekapabsen model.RekapAbsen) {
+	s.repo.InsertRekapAbsen(rekapabsen)
+}
+
+func (s *svcAdmin) DeletePerizinan(perizinan_id int) {
+	s.repo.DeletePerizinan(perizinan_id)
+}
+
+func (s *svcAdmin) GetAllPerizinan() []model.APIResponsePerizinan {
+	return s.repo.GetAllPerizinan()
+}
+
+func (s *svcAdmin) GetByIdPerizinan(perizinan_id int) model.APIResponsePerizinan {
+	return s.repo.GetByIdPerizinan(perizinan_id)
+}
+
+func (s *svcAdmin) UpdatePerizinan(perizinan_id int, perizinan model.Perizinan) {
+	s.repo.UpdatePerizinan(perizinan_id, perizinan)
+}
+
+//--------------------------------------------------------------------------------------
+
 func (s *svcAdmin) CreateKategoriPerizinan(perizinan model.KategoriPerizinan) {
 	s.repo.CreateKategoriPerizinan(perizinan)
 }

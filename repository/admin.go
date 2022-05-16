@@ -11,6 +11,41 @@ type repositoryAdmin struct {
 	DB *gorm.DB
 }
 
+func (r *repositoryAdmin) UpdateRekapAbsen(starts string, finish string, pegawai_id int, rekapabsen model.RekapAbsen) {
+	r.DB.Model(&model.RekapAbsen{}).Where("tanggal BETWEEN ? AND ?", starts, finish).Where("user_id", pegawai_id).Updates(&rekapabsen)
+	r.DB.Model(&model.RekapAbsen{}).Where("tanggal BETWEEN ? AND ?", starts, finish).Where("user_id", pegawai_id).Update("perizinan_id", nil)
+}
+
+func (r *repositoryAdmin) DeleteRekapAbsen(starts string, finish string, pegawai_id int) {
+	r.DB.Unscoped().Where("tanggal BETWEEN ? AND ?", starts, finish).Where("user_id", pegawai_id).Delete(&model.RekapAbsen{})
+}
+
+func (r *repositoryAdmin) InsertRekapAbsen(rekapabsen model.RekapAbsen) {
+	r.DB.Create(&rekapabsen)
+}
+
+func (r *repositoryAdmin) DeletePerizinan(perizinan_id int) {
+	r.DB.Unscoped().Where("id", perizinan_id).Delete(&model.Perizinan{})
+}
+
+func (r *repositoryAdmin) GetAllPerizinan() []model.APIResponsePerizinan {
+	var perizinan []model.APIResponsePerizinan
+	r.DB.Table("users").Select("users.nama AS pegawai_nama", "users.id AS user_id", "kategori_perizinan.id AS kategori_perizinan_id", "kategori_perizinan.name AS kategori_perizinan_nama", "perizinan.catatan", "perizinan.status", "perizinan.start", "perizinan.finish", "perizinan.id").Joins("inner join perizinan on perizinan.user_id = users.id").Joins("inner join kategori_perizinan on perizinan.kategori_perizinan_id=kategori_perizinan.id").Scan(&perizinan)
+	return perizinan
+}
+
+func (r *repositoryAdmin) GetByIdPerizinan(perizinan_id int) model.APIResponsePerizinan {
+	var perizinan model.APIResponsePerizinan
+	r.DB.Table("users").Select("users.nama AS pegawai_nama", "users.id AS user_id", "kategori_perizinan.id AS kategori_perizinan_id", "kategori_perizinan.name AS kategori_perizinan_nama", "perizinan.catatan", "perizinan.status", "perizinan.start", "perizinan.finish", "perizinan.id").Joins("inner join perizinan on perizinan.user_id = users.id").Joins("inner join kategori_perizinan on perizinan.kategori_perizinan_id=kategori_perizinan.id").Where("perizinan.id", perizinan_id).Scan(&perizinan)
+	return perizinan
+}
+
+func (r *repositoryAdmin) UpdatePerizinan(perizinan_id int, perizinan model.Perizinan) {
+	r.DB.Model(&model.Perizinan{}).Where("id", perizinan_id).Updates(perizinan)
+}
+
+//---------------------------------------------------------------------------------------------
+
 func (r *repositoryAdmin) CreateKategoriPerizinan(perizinan model.KategoriPerizinan) {
 	r.DB.Create(&perizinan)
 }

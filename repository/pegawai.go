@@ -14,7 +14,6 @@ type repositoryPegawai struct {
 	DB *gorm.DB
 }
 
-// GetAllKategoriPerizinan implements domain.AdapterPegawaiRepository
 func (r *repositoryPegawai) GetAllKategoriPerizinan() []model.APIResponseKategoriPerizinan {
 	var kategoriperizinan []model.APIResponseKategoriPerizinan
 	r.DB.Table("kategori_perizinan").Scan(&kategoriperizinan)
@@ -35,13 +34,13 @@ func (r *repositoryPegawai) CreatePerizinan(perizinan model.Perizinan) bool {
 
 func (r *repositoryPegawai) GetAllPerizinan(pegawai_id int) []model.APIResponsePerizinan {
 	var perizinan []model.APIResponsePerizinan
-	r.DB.Table("users").Select("users.nama AS pegawai_nama", "kategori_perizinan.name AS kategori_perizinan_nama", "perizinan.catatan", "perizinan.status", "perizinan.start", "perizinan.finish", "perizinan.id").Joins("inner join perizinan on perizinan.user_id = users.id").Joins("inner join kategori_perizinan on perizinan.kategori_perizinan_id=kategori_perizinan.id").Where("perizinan.user_id", pegawai_id).Scan(&perizinan)
+	r.DB.Table("users").Select("users.nama AS pegawai_nama", "users.id AS user_id", "kategori_perizinan.id AS kategori_perizinan_id", "kategori_perizinan.name AS kategori_perizinan_nama", "perizinan.catatan", "perizinan.status", "perizinan.start", "perizinan.finish", "perizinan.id").Joins("inner join perizinan on perizinan.user_id = users.id").Joins("inner join kategori_perizinan on perizinan.kategori_perizinan_id=kategori_perizinan.id").Where("perizinan.user_id", pegawai_id).Scan(&perizinan)
 	return perizinan
 }
 
 func (r *repositoryPegawai) GetByIdPerizinan(perizinan_id int) model.APIResponsePerizinan {
 	var perizinan model.APIResponsePerizinan
-	r.DB.Table("users").Select("users.nama AS pegawai_nama", "kategori_perizinan.name AS kategori_perizinan_nama", "perizinan.catatan", "perizinan.status", "perizinan.start", "perizinan.finish", "perizinan.id").Joins("inner join perizinan on perizinan.user_id = users.id").Joins("inner join kategori_perizinan on perizinan.kategori_perizinan_id=kategori_perizinan.id").Where("perizinan.id", perizinan_id).Scan(&perizinan)
+	r.DB.Table("users").Select("users.nama AS pegawai_nama", "users.id AS user_id", "kategori_perizinan.id AS kategori_perizinan_id", "kategori_perizinan.name AS kategori_perizinan_nama", "perizinan.catatan", "perizinan.status", "perizinan.start", "perizinan.finish", "perizinan.id").Joins("inner join perizinan on perizinan.user_id = users.id").Joins("inner join kategori_perizinan on perizinan.kategori_perizinan_id=kategori_perizinan.id").Where("perizinan.id", perizinan_id).Scan(&perizinan)
 	return perizinan
 }
 

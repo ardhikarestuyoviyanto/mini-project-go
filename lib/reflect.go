@@ -130,7 +130,7 @@ func Strtotime(str string) int64 {
 	return t.Unix()
 }
 
-func rangeDate(start, end time.Time) func() time.Time {
+func RangeDate(start, end time.Time) func() time.Time {
 	y, m, d := start.Date()
 	start = time.Date(y, m, d, 0, 0, 0, 0, time.UTC)
 	y, m, d = end.Date()
@@ -160,7 +160,7 @@ func ValidationDatePerizinan(starts, finishs string, max_izin int) bool {
 		return false
 	}
 
-	for rd := rangeDate(start, end); ; {
+	for rd := RangeDate(start, end); ; {
 		date := rd()
 		if date.IsZero() {
 			break

@@ -48,4 +48,6 @@ type APIResponsePerizinan struct {
 	Catatan               string `json:"catatan"`
 	PegawaiNama           string `json:"nama_pegawai"`
 	KategoriPerizinanNama string `json:"kategori_perizinan"`
+	UserId                int    `json:"user_id"`
+	KategoriPerizinanId   int    `json:"kategori_perizinan_id"`
 }

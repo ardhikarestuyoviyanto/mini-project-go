@@ -33,6 +33,14 @@ type AdapterAdminRepository interface {
 	DeleteKategoriPerizinan(kategori_id int)
 	GetAllKategoriPerizinan() []model.APIResponseKategoriPerizinan
 	GetByIdKategoriPerizinan(kategori_id int) model.APIResponseKategoriPerizinan
+	//-----------------------------------------------------------------------
+	GetAllPerizinan() []model.APIResponsePerizinan
+	GetByIdPerizinan(perizinan_id int) model.APIResponsePerizinan
+	UpdatePerizinan(perizinan_id int, perizinan model.Perizinan)
+	InsertRekapAbsen(rekapabsen model.RekapAbsen)
+	DeleteRekapAbsen(starts, finish string, pegawai_id int)
+	UpdateRekapAbsen(starts, finish string, pegawai_id int, rekapabsen model.RekapAbsen)
+	DeletePerizinan(perizinan_id int)
 }
 
 type AdapterAdminService interface {
@@ -58,10 +66,18 @@ type AdapterAdminService interface {
 	GetByIdPegawai(user_id int) model.APIResponsePegawai
 	DeletePegawai(user_id int)
 	GetByEmailPegawai(email string) model.APIResponsePegawai
-	//---------------------------------------------------------------sW-
+	//----------------------------------------------------------------
 	CreateKategoriPerizinan(perizinan model.KategoriPerizinan)
 	UpdateKategoriPerizinan(kategori_id int, perizinan model.KategoriPerizinan)
 	DeleteKategoriPerizinan(kategori_id int)
 	GetAllKategoriPerizinan() []model.APIResponseKategoriPerizinan
 	GetByIdKategoriPerizinan(kategori_id int) model.APIResponseKategoriPerizinan
+	//--------------------------------------------------------------------------
+	GetAllPerizinan() []model.APIResponsePerizinan
+	GetByIdPerizinan(perizinan_id int) model.APIResponsePerizinan
+	UpdatePerizinan(perizinan_id int, perizinan model.Perizinan)
+	InsertRekapAbsen(rekapabsen model.RekapAbsen)
+	DeleteRekapAbsen(starts, finish string, pegawai_id int)
+	UpdateRekapAbsen(starts, finish string, pegawai_id int, rekapabsen model.RekapAbsen)
+	DeletePerizinan(perizinan_id int)
 }
